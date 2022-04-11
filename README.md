@@ -86,19 +86,16 @@ the same way, but it's easier to visually see in the second gcloud command.
 
     $ cd cloudrun-tf
 
-    #
-    # Create repository with:
-    #
+Create repository with:
+
     $ gcloud artifacts repositories create docker-repo --repository-format=docker --location=us-central1 --description="Docker repository"
 
-    #
-    # Verify with:
-    #
+Verify with:
+
     $ gcloud artifacts repositories list
 
-    #
-    # Submit for build
-    #
+Submit for build
+
     $ PROJECT=$(gcloud config get-value project)
     $ gcloud builds submit --tag us-central1-docker.pkg.dev/$PROJECT/docker-repo/states-image:tag1
 
