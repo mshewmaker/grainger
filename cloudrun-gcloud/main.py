@@ -21,7 +21,7 @@ states=get_states()
 
 app = Flask(__name__)
 
-@app.route('/state/<state_code>/')
+@app.route('/state/<state_code>')
 def lookup(state_code):
     if state_code.upper() in states:
         return(states[state_code.upper()] + '\n',200)

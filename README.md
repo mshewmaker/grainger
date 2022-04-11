@@ -9,8 +9,8 @@ On creating a new GCP sandbox or project:
 
     $ gcloud init
     $ gcloud auth application-default login
-    $ export TF_VAR_project_id=$PROJECT_ID
     $ export PROJECT_ID=$(gcloud config get-value project)
+    $ export TF_VAR_project_id=$PROJECT_ID
 
 Then enable API access with
 
@@ -126,10 +126,7 @@ Verify with:
 
 Submit for build:
 
-    $ PROJECT=$(gcloud config get-value project)
-    $ gcloud builds submit --tag us-central1-docker.pkg.dev/$PROJECT/docker-repo/states-image:tag1
-
-    $ vim main.tf
+    $ gcloud builds submit --tag us-central1-docker.pkg.dev/$PROJECT_ID/docker-repo/states-image:tag1
 
 Before first run only: 
 
