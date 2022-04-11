@@ -65,6 +65,21 @@ Note:  In the gcloud command, I set max-instances to 10 simply because this is a
 
 ## 3.  Cloud Run HTTP solution - deployed via gcloud
 
+Example queries and output:
+
+    $ curl https://states-nuwse2zczq-ue.a.run.app/state/ga/
+    Georgia
+    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/dc/
+    District of Columbia
+    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/fl/
+    Florida
+    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/oh/
+    Ohio
+    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/nonexistent/
+    Unrecognized state code
+
+To deploy:
+
     $ cd cloudrun-gcloud
     $ gcloud run deploy states --source ./ --region=us-east1 --allow-unauthenticated
     $ gcloud run services describe states --region=us-east1|grep URL:
@@ -101,4 +116,4 @@ Submit for build
         solutions, so there's a nice URL instead of a random playground
         URL for the queries.  That could be done in python as in the DNS
         solution, or via terraform, (there's a cloudflare provider).
-        
+
