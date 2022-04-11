@@ -21,7 +21,7 @@ This DNS-based solution doesn't use containers, but DNS automatically scales
 and caches data horizontally across a population.
 
 If millions of people were doing a bunch of small queries like this
-for a small set of data that rarely changed often, this would be an potential
+for a small set of data that rarely changed often, this would be a potential
 solution.
 
 To deploy:
@@ -69,13 +69,13 @@ Example queries and output:
 
     $ curl https://states-nuwse2zczq-ue.a.run.app/state/ga/
     Georgia
-    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/dc/
+    $ curl https://states-nuwse2zczq-ue.a.run.app/state/dc/
     District of Columbia
-    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/fl/
+    $ curl https://states-nuwse2zczq-ue.a.run.app/state/fl/
     Florida
-    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/oh/
+    $ curl https://states-nuwse2zczq-ue.a.run.app/state/oh/
     Ohio
-    mark@k9:~$ curl https://states-nuwse2zczq-ue.a.run.app/state/nonexistent/
+    $ curl https://states-nuwse2zczq-ue.a.run.app/state/nonexistent/
     Unrecognized state code
 
 To deploy:
@@ -85,6 +85,19 @@ To deploy:
     $ gcloud run services describe states --region=us-east1|grep URL:
 
 ## 4.  Cloud Run HTTP solution - deployed via terraform
+
+Example queries and output:
+
+    $ curl https://states-nuwse2zczq-uc.a.run.app/state/ga/
+    Georgia
+    $ curl https://states-nuwse2zczq-uc.a.run.app/state/il/
+    Illinois
+    $ curl https://states-nuwse2zczq-uc.a.run.app/state/ok/
+    Oklahoma
+    $ curl https://states-nuwse2zczq-uc.a.run.app/state/dc/
+    District of Columbia
+    $ curl https://states-nuwse2zczq-uc.a.run.app/state/nonexistent/
+    Unrecognized state code
 
     $ cd cloudrun-tf
 
@@ -102,10 +115,18 @@ Submit for build
     $ gcloud builds submit --tag us-central1-docker.pkg.dev/$PROJECT/docker-repo/states-image:tag1
 
     $ vim main.tf # update project and image values.  Yes..I could fix that.
+
+Before first run only: 
+
+    $ # rm terraform.tfstate terraform.tfstate.backup  # Do only if recreating google sandbox
+    $ terraform init
+
+Then on every change:
+
     $ terraform plan
     $ terraform apply
 
-    Note that the code, dockerfile, and requirements for both Cloud Run solutions are the same.
+Note that the code, dockerfile, and requirements for both Cloud Run solutions are the same.
 
 ## 5.  Potential extensions
 
