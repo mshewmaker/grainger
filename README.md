@@ -103,15 +103,13 @@ To deploy:
 
 Example queries and output:
 
-    $ curl https://states-nuwse2zczq-uc.a.run.app/state/ga/
-    Georgia
-    $ curl https://states-nuwse2zczq-uc.a.run.app/state/il/
-    Illinois
-    $ curl https://states-nuwse2zczq-uc.a.run.app/state/ok/
-    Oklahoma
-    $ curl https://states-nuwse2zczq-uc.a.run.app/state/dc/
+    $ curl https://us-central1-playground-s-11-8610dafa.cloudfunctions.net/state/oh
+    Ohio
+    $ curl https://us-central1-playground-s-11-8610dafa.cloudfunctions.net/state/dc
     District of Columbia
-    $ curl https://states-nuwse2zczq-uc.a.run.app/state/nonexistent/
+    $ curl https://us-central1-playground-s-11-8610dafa.cloudfunctions.net/state/ga
+    Georgia
+    $ curl https://us-central1-playground-s-11-8610dafa.cloudfunctions.net/state/nonexistent
     Unrecognized state code
 
     $ cd cloudrun-tf
