@@ -3,7 +3,22 @@
 
 Return a US state given a two-character state code, via a scalable API that's automatically provisioned using containers.
 
-## 1.  DNS solution:  Find the name of a state by doing a DNS query
+## 1.  Initialization:
+
+On creating a new GCP sandbox or project:
+
+    $ gcloud init
+    $ gcloud auth application-default login
+    $ export TF_VAR_project_id=$PROJECT_ID
+    $ export PROJECT_ID=$(gcloud config get-value project)
+
+Then enable API access with
+
+    $ cd enable-gcp-apis
+    $ # rm terraform.tfstate terraform.tfstate.backup  # Do only if recreating google sandbox
+    $ terraform init
+
+## 2.  DNS solution:  Find the name of a state by doing a DNS query
 
 With some unused domains laying around, I couldn't resist putting one
 to use as a sample solution.
@@ -33,7 +48,7 @@ To deploy:
 
 Note that I didn't include proper secrets management.
 
-## 2.  Cloud function HTTP solution
+## 3.  Cloud function HTTP solution
 
 This solution involves containers, but you don't need to explicitely work with them.
 
@@ -63,7 +78,7 @@ a URL for use in curl tests such as given above.)
 
 Note:  In the gcloud command, I set max-instances to 10 simply because this is a test instance.
 
-## 3.  Cloud Run HTTP solution - deployed via gcloud
+## 4.  Cloud Run HTTP solution - deployed via gcloud
 
 Example queries and output:
 
@@ -84,7 +99,7 @@ To deploy:
     $ gcloud run deploy states --source ./ --region=us-east1 --allow-unauthenticated
     $ gcloud run services describe states --region=us-east1|grep URL:
 
-## 4.  Cloud Run HTTP solution - deployed via terraform
+## 5.  Cloud Run HTTP solution - deployed via terraform
 
 Example queries and output:
 
@@ -109,12 +124,12 @@ Verify with:
 
     $ gcloud artifacts repositories list
 
-Submit for build
+Submit for build:
 
     $ PROJECT=$(gcloud config get-value project)
     $ gcloud builds submit --tag us-central1-docker.pkg.dev/$PROJECT/docker-repo/states-image:tag1
 
-    $ vim main.tf # update project and image values.  Yes..I could fix that.
+    $ vim main.tf
 
 Before first run only: 
 
@@ -123,17 +138,16 @@ Before first run only:
 
 Then on every change:
 
-    $ terraform plan
-    $ terraform apply
+    $ terraform plan  -var="container_image=ENTER_IMAGE_HERE"
+    $ terraform apply -var="container_image=ENTER_IMAGE_HERE"
 
 Note that the code, dockerfile, and requirements for both Cloud Run solutions are the same.
 
-## 5.  Potential extensions
+## 6.  Potential extensions
 
     1.  Including proper secrets management
     2.  Add configuration of when scaling is needed
-    3.  Fix the need to update the project name in the cloud run main.tf
-    4.  Update a CNAME in cloudflare for each of the three non-DNS
+    3.  Update a CNAME in cloudflare for each of the three non-DNS
         solutions, so there's a nice URL instead of a random playground
         URL for the queries.  That could be done in python as in the DNS
         solution, or via terraform, (there's a cloudflare provider).

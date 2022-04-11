@@ -7,8 +7,18 @@ terraform {
   }
 }
 
+variable "project_id" {
+  description = "The GCP project ID for the project"
+  type        = string
+}
+
+variable "container_image" {
+  description = "The container image to deploy"
+  type        = string
+}
+
 provider "google" {
-  project = "playground-s-11-c7088603"
+  project = var.project_id
 }
 
 # Enables the Cloud Run API
@@ -20,13 +30,13 @@ resource "google_project_service" "run_api" {
 
 # Create the Cloud Run service
 resource "google_cloud_run_service" "run_service" {
-  name = "states"
+  name     = "states"
   location = "us-central1"
 
   template {
     spec {
       containers {
-        image = "us-central1-docker.pkg.dev/playground-s-11-c7088603/docker-repo/states-image:tag1"
+        image = var.container_image
       }
     }
   }
@@ -51,7 +61,8 @@ resource "google_cloud_run_service_iam_member" "run_all_users" {
 
 # Display the service URL
 output "service_url" {
-  value = google_cloud_run_service.run_service.status[0].url
+  value       = google_cloud_run_service.run_service.status[0].url
+  description = "URL of state lookup API"
 }
 
 
