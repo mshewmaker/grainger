@@ -1,9 +1,11 @@
 
-0.  General Goal:
------------------
+----------------
+0.  General Goal
+----------------
 
 Return a US state given a two-character state code, via a scalable API that's automatically provisioned using containers.
 
+----------------------------------------------------------------
 1.  DNS solution:  Find the name of a state by doing a DNS query
 ----------------------------------------------------------------
 
@@ -34,8 +36,9 @@ To deploy:
 
 Note that I didn't include proper secrets management.
 
-2.  Cloud function HTTP solution:
----------------------------------
+--------------------------------
+2.  Cloud function HTTP solution
+--------------------------------
 
 This solution involves containers, but you don't need to explicitely work with them.
 
@@ -65,8 +68,9 @@ a URL for use in curl tests such as given above.
 
 Note:  In the gcloud command, I set max-instances to 10 simply because this is a test instance.
 
-3.  Cloud Run HTTP solution - deployed via gcloud:
---------------------------------------------------
+-------------------------------------------------
+3.  Cloud Run HTTP solution - deployed via gcloud
+-------------------------------------------------
 
     $ cd cloudrun-gcloud
     $ gcloud run deploy states --source ./ --region=us-east1
@@ -76,8 +80,9 @@ Both gcloud commands show the URL to use to do the query.  You'd grep them
 the same way, but it's easier to visually see in the second gcloud command.
 
 
-4.  Cloud Run HTTP solution - deployed via terraform:
------------------------------------------------------
+----------------------------------------------------
+4.  Cloud Run HTTP solution - deployed via terraform
+----------------------------------------------------
 
     $ cd cloudrun-tf
 
@@ -103,8 +108,9 @@ the same way, but it's easier to visually see in the second gcloud command.
 
     Note that the code, dockerfile, and requirements for both Cloud Run solutions are the same.
 
-5.  Potential extensions:
--------------------------
+------------------------
+5.  Potential extensions
+------------------------
 
     1.  Including proper secrets management
     2.  Add configuration of when scaling is needed
