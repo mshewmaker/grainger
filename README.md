@@ -63,8 +63,9 @@ To deploy:
     $ gcloud functions deploy states --runtime python39 --trigger-http --allow-unauthenticated --entry-point=process_request --memory=128MB --security-level=secure-optional --timeout=5s --max-instances=10
     $ gcloud functions describe states
 
-The output of the gcloud command includes a "url: " entry that points to
-a URL for use in curl tests such as given above.
+The output of both gcloud commands include a "url: " entry that points to
+a URL for use in curl tests such as given above.  You'd grep them the same
+way, but it's easier to visually see in the second gcloud command.
 
 Note:  In the gcloud command, I set max-instances to 10 simply because this is a test instance.
 
@@ -75,10 +76,6 @@ Note:  In the gcloud command, I set max-instances to 10 simply because this is a
     $ cd cloudrun-gcloud
     $ gcloud run deploy states --source ./ --region=us-east1
     $ gcloud run services describe states --region=us-east1|grep URL:
-
-Both gcloud commands show the URL to use to do the query.  You'd grep them
-the same way, but it's easier to visually see in the second gcloud command.
-
 
 ----------------------------------------------------
 4.  Cloud Run HTTP solution - deployed via terraform
