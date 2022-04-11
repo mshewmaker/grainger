@@ -3,7 +3,7 @@
 
 Return a US state given a two-character state code, via a scalable API that's automatically provisioned using containers.
 
-## 1.  Initialization:
+## 1.  Initialization
 
 On creating a new GCP sandbox or project:
 
