@@ -1,12 +1,12 @@
 
 ----------------
-0.  General Goal
+#0.  General Goal
 ----------------
 
 Return a US state given a two-character state code, via a scalable API that's automatically provisioned using containers.
 
 ----------------------------------------------------------------
-1.  DNS solution:  Find the name of a state by doing a DNS query
+#1.  DNS solution:  Find the name of a state by doing a DNS query
 ----------------------------------------------------------------
 
 With some unused domains laying around, I couldn't resist putting one
@@ -31,13 +31,14 @@ solution.
 To deploy:
 
     $ cd dns
-    $ create config.py based on filled-in version of config_EDITME.py
+    $ test -f config.py || cp -a config_dist.py config.py
+    $ vim config.py # Enter appropritate cloudflare and domain info
     $ ./state_dns_solution.py
 
 Note that I didn't include proper secrets management.
 
 --------------------------------
-2.  Cloud function HTTP solution
+#2.  Cloud function HTTP solution
 --------------------------------
 
 This solution involves containers, but you don't need to explicitely work with them.
@@ -61,24 +62,23 @@ To deploy:
 
     $ cd cloudfunctions/
     $ gcloud functions deploy states --runtime python39 --trigger-http --allow-unauthenticated --entry-point=process_request --memory=128MB --security-level=secure-optional --timeout=5s --max-instances=10
-    $ gcloud functions describe states
+    $ gcloud functions describe states | grep url:
 
-The output of both gcloud commands include a "url: " entry that points to
-a URL for use in curl tests such as given above.  You'd grep them the same
-way, but it's easier to visually see in the second gcloud command.
+(The output of both gcloud commands include a "url: " entry that points to
+a URL for use in curl tests such as given above.)
 
 Note:  In the gcloud command, I set max-instances to 10 simply because this is a test instance.
 
 -------------------------------------------------
-3.  Cloud Run HTTP solution - deployed via gcloud
+#3.  Cloud Run HTTP solution - deployed via gcloud
 -------------------------------------------------
 
     $ cd cloudrun-gcloud
-    $ gcloud run deploy states --source ./ --region=us-east1
+    $ gcloud run deploy states --source ./ --region=us-east1 --allow-unauthenticated
     $ gcloud run services describe states --region=us-east1|grep URL:
 
 ----------------------------------------------------
-4.  Cloud Run HTTP solution - deployed via terraform
+#4.  Cloud Run HTTP solution - deployed via terraform
 ----------------------------------------------------
 
     $ cd cloudrun-tf
@@ -103,7 +103,7 @@ Submit for build
     Note that the code, dockerfile, and requirements for both Cloud Run solutions are the same.
 
 ------------------------
-5.  Potential extensions
+#5.  Potential extensions
 ------------------------
 
     1.  Including proper secrets management
