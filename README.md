@@ -23,6 +23,8 @@ Then enable API access with
 With some unused domains laying around, I couldn't resist putting one
 to use as a sample solution.
 
+Example query and output:
+
     $ host -t txt nc.dns.pondernation.com
     nc.dns.pondernation.com descriptive text "North Carolina"
     $ host -t txt ak.dns.pondernation.com
